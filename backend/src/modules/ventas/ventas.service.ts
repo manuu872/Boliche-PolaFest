@@ -102,7 +102,7 @@ export class VentasService {
     await this.movRepo.save(movimiento);
 
     return {
-      mensaje: '✅ Venta registrada correctamente y stock actualizado',
+      mensaje: 'Venta registrada correctamente y stock actualizado',
       usuario: `${tarjeta.usuario?.nombre || ''} ${tarjeta.usuario?.apellido || ''}`,
       evento: evento.nombre,
       venta: ventaGuardada,

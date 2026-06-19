@@ -49,12 +49,12 @@ export class PagosService {
     try {
       const accessToken = this.configService.get<string>('MP_ACCESS_TOKEN');
       const url = `https://api.mercadopago.com/v1/payments/search?external_reference=${idTarjeta}&status=approved&sort=date_created&criteria=desc&limit=1`;
-      console.log('🔍 Buscando pago para id_tarjeta:', idTarjeta);
+      console.log('Buscando pago para id_tarjeta:', idTarjeta);
       const res = await fetch(url, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();
-      console.log('📦 Respuesta MP:', JSON.stringify(data));
+      console.log('Respuesta MP:', JSON.stringify(data));
       const payments = data?.results ?? [];
 
       if (!payments.length) return { ok: false, mensaje: 'Sin pago aprobado reciente' };
@@ -75,7 +75,7 @@ export class PagosService {
       tarjeta.saldo = Number(tarjeta.saldo) + monto;
       await this.tarjetaRepository.save(tarjeta);
 
-      console.log(`✅ Saldo acreditado: $${monto} a tarjeta ${id_tarjeta}`);
+      console.log(`Saldo acreditado: $${monto} a tarjeta ${id_tarjeta}`);
       return { ok: true, saldo: tarjeta.saldo, payment_id: paymentId };
     } catch (err) {
       console.error('Error confirmando por preferencia:', err);
@@ -99,7 +99,7 @@ export class PagosService {
       tarjeta.saldo = Number(tarjeta.saldo) + monto;
       await this.tarjetaRepository.save(tarjeta);
 
-      console.log(`✅ Saldo confirmado: $${monto} a tarjeta ${id_tarjeta}`);
+      console.log(`Saldo confirmado: $${monto} a tarjeta ${id_tarjeta}`);
       return { ok: true, saldo: tarjeta.saldo };
     } catch (err) {
       console.error('Error confirmando pago:', err);
@@ -128,7 +128,7 @@ export class PagosService {
       tarjeta.saldo = Number(tarjeta.saldo) + monto;
       await this.tarjetaRepository.save(tarjeta);
 
-      console.log(`✅ Saldo cargado: $${monto} a tarjeta ${id_tarjeta}`);
+      console.log(`Saldo cargado: $${monto} a tarjeta ${id_tarjeta}`);
     } catch (err) {
       console.error('Error procesando webhook MP:', err);
     }
