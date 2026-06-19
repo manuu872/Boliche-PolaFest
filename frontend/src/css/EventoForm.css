@@ -1,0 +1,110 @@
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  font-family: "Papyrus", sans-serif;
+}
+
+
+.evento-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #f1c40f;
+}
+
+
+.evento-form-titulo {
+  font-size: 2.5rem;
+  text-shadow: 0 0 20px #f1c40f;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+
+.evento-form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(20, 20, 20, 0.95);
+  border: 2px solid #f1c40f;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #f1c40f;
+  padding: 40px;
+  width: 420px;
+  gap: 15px;
+}
+
+.evento-form label {
+  text-align: left;
+  font-weight: bold;
+  color: #f1c40f;
+}
+
+.evento-form input {
+  padding: 10px;
+  border: 1px solid #f1c40f;
+  border-radius: 8px;
+  background-color: #111;
+  color: #f1c40f;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.evento-form input:focus {
+  outline: none;
+  box-shadow: 0 0 10px #f1c40f;
+  background-color: #000;
+}
+
+
+.btn-egipcio {
+  background-color: #f1c40f;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+
+.btn-egipcio:hover {
+  background-color: #d4ac0d;
+  transform: scale(1.05);
+}
+
+.btn-volver {
+  margin-top: 25px;
+  background-color: transparent;
+  border: 1px solid #f1c40f;
+  color: #f1c40f;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn-volver:hover {
+  background-color: #f1c40f;
+  color: #000;
+  transform: scale(1.05);
+}
+
+
+@media (max-width: 500px) {
+  .evento-form {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .evento-form-titulo {
+    font-size: 1.8rem;
+  }
+}

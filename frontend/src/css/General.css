@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --gold: #FFB400;
+  --gold-dim: rgba(255,180,0,0.15);
+  --gold-glow: rgba(255,180,0,0.35);
+  --bg: #080808;
+  --bg-card: #111111;
+  --bg-card2: #1a1a1a;
+  --border: #222;
+  --text: #e0e0e0;
+  --muted: #666;
+  --red: #e74c3c;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+}
+
+/* ───── TÍTULOS ───── */
+.titulo-egipcio {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold-glow);
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+/* ───── TABLAS ───── */
+.tabla-egipcia {
+  width: 92%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border), 0 8px 40px rgba(0,0,0,0.5);
+}
+
+.tabla-egipcia thead tr {
+  background: linear-gradient(90deg, #161616, #1f1c0e);
+}
+
+.tabla-egipcia th {
+  padding: 13px 16px;
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid rgba(255,180,0,0.25);
+  white-space: nowrap;
+}
+
+.tabla-egipcia td {
+  padding: 12px 16px;
+  color: #ccc;
+  font-size: 0.92rem;
+  border-bottom: 1px solid #1a1a1a;
+  transition: background 0.15s;
+}
+
+.tabla-egipcia tbody tr {
+  background-color: #111;
+}
+
+.tabla-egipcia tbody tr:nth-child(even) {
+  background-color: #0d0d0d;
+}
+
+.tabla-egipcia tbody tr:hover td {
+  background-color: rgba(255,180,0,0.05);
+  color: #fff;
+}
+
+/* ───── BOTONES PRINCIPALES ───── */
+.btn-egipcio {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #FFB400, #e09000);
+  color: #000;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+
+.btn-egipcio:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255,180,0,0.35);
+}
+
+.btn-egipcio.editar {
+  background: linear-gradient(135deg, #2a6cff, #1a50cc);
+  color: #fff;
+}
+
+.btn-egipcio.editar:hover {
+  box-shadow: 0 4px 16px rgba(42,108,255,0.35);
+}
+
+.btn-egipcio.eliminar {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #fff;
+}
+
+.btn-egipcio.eliminar:hover {
+  box-shadow: 0 4px 16px rgba(231,76,60,0.4);
+}
+
+.btn-egipcio.ver-tarjeta,
+.btn-egipcio.crear-tarjeta {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+.btn-egipcio.ver-tarjeta:hover,
+.btn-egipcio.crear-tarjeta:hover {
+  background: var(--gold-dim);
+  box-shadow: 0 0 12px var(--gold-glow);
+  transform: none;
+}
+
+/* ───── BOTÓN CREAR ───── */
+.btn-crear {
+  background: linear-gradient(135deg, #FFB400, #e09000);
+  color: #000;
+  border: none;
+  padding: 10px 22px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 18px rgba(255,180,0,0.25);
+}
+
+.btn-crear:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255,180,0,0.4);
+}
+
+/* ───── BOTÓN VOLVER ───── */
+.btn-volver {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(255,180,0,0.4);
+  border-radius: 10px;
+  padding: 9px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: all 0.2s;
+}
+
+.btn-volver:hover {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  box-shadow: 0 0 16px var(--gold-glow);
+}
+
+/* ───── INPUTS ───── */
+.input-egipcio {
+  background: #111;
+  color: #fff;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.input-egipcio:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(255,180,0,0.12);
+}
+
+/* ───── ACCIONES EN TABLAS ───── */
+.acciones-egipcias {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

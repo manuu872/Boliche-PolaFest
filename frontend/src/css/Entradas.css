@@ -1,0 +1,64 @@
+.entradas-container {
+  background-color: #000;
+  min-height: 100vh;
+  color: #ffd700;
+  padding: 30px;
+  text-align: center;
+}
+
+.titulo-egipcio {
+  font-size: 2rem;
+  text-shadow: 0 0 10px #ffcc00;
+  margin-bottom: 25px;
+}
+
+.tabla-egipcia {
+  width: 90%;
+  margin: 0 auto 30px auto;
+  border-collapse: collapse;
+  background-color: #0d0d0d;
+  border: 1px solid #b8860b;
+  box-shadow: 0 0 15px #b8860b;
+}
+
+.tabla-egipcia th,
+.tabla-egipcia td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #b8860b;
+}
+
+.tabla-egipcia th {
+  background-color: #1a1a1a;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #ffd700;
+}
+
+.estado {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.estado.usada {
+  color: #ff5252;
+}
+
+.estado.no-usada {
+  color: #00e676;
+}
+
+.btn-volver {
+  background-color: #ffcc00;
+  color: #000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-volver:hover {
+  background-color: #ffdb4d;
+}

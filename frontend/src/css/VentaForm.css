@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+.venta-container {
+  min-height: 100vh;
+  background-color: #080808;
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(255,180,0,0.08) 0%, transparent 55%);
+  padding: 2rem 1.5rem 3rem;
+  font-family: 'Inter', sans-serif;
+  color: #e0e0e0;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.venta-container h1.titulo-egipcio {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: #FFB400;
+  text-align: center;
+  letter-spacing: 3px;
+  text-shadow: 0 0 25px rgba(255,180,0,0.4);
+  margin-bottom: 2rem;
+}
+
+/* ── SECCIONES ── */
+.tarjeta-section,
+.eventos-section,
+.productos-section,
+.total-section {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 0 auto 1.25rem;
+  max-width: 780px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.tarjeta-section h2,
+.eventos-section h2,
+.productos-section h2 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #FFB400;
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.tarjeta-section label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.5rem;
+}
+
+/* ── INPUT DE BÚSQUEDA ── */
+.tarjeta-input {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.tarjeta-input input {
+  flex: 1;
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-input input:focus {
+  border-color: #FFB400;
+  box-shadow: 0 0 0 3px rgba(255,180,0,0.1);
+}
+
+/* ── DATOS USUARIO ── */
+.datos-usuario {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #161500, #1a1a0a);
+  border: 1px solid rgba(255,180,0,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.datos-usuario p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.datos-usuario p strong {
+  color: #FFB400;
+  margin-right: 0.4rem;
+}
+
+/* ── SELECT ── */
+.eventos-section select,
+.form-producto select {
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  font-size: 0.92rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.eventos-section select:focus,
+.form-producto select:focus {
+  border-color: #FFB400;
+  box-shadow: 0 0 0 3px rgba(255,180,0,0.1);
+}
+
+/* ── FORM PRODUCTO ── */
+.form-producto {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form-producto select { flex: 1; min-width: 200px; }
+
+.form-producto input[type="number"] {
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  font-size: 0.92rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  width: 100px;
+  transition: border-color 0.2s;
+}
+
+.form-producto input[type="number"]:focus {
+  border-color: #FFB400;
+  box-shadow: 0 0 0 3px rgba(255,180,0,0.1);
+}
+
+/* ── TABLA ── */
+.tabla-egipcia {
+  width: 100%;
+  margin: 1rem 0 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #1e1e1e;
+}
+
+.tabla-egipcia thead tr {
+  background: linear-gradient(90deg, #161616, #1a1a0e);
+}
+
+.tabla-egipcia th {
+  padding: 11px 14px;
+  color: #FFB400;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255,180,0,0.2);
+  text-align: center;
+}
+
+.tabla-egipcia td {
+  padding: 11px 14px;
+  color: #ccc;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #181818;
+  text-align: center;
+  background: #111;
+}
+
+.tabla-egipcia tbody tr:hover td { background: rgba(255,180,0,0.04); }
+
+/* ── TOTAL SECTION ── */
+.total-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.total-section h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #FFB400;
+  margin: 0;
+  text-shadow: 0 0 16px rgba(255,180,0,0.3);
+}
+
+/* ── BOTONES ── */
+.btn-egipcio {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #FFB400, #e09000);
+  color: #000;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+
+.btn-egipcio:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(255,180,0,0.35);
+}
+
+.btn-egipcio:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-egipcio.confirmar {
+  padding: 11px 28px;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #FFB400, #ff8c00);
+  box-shadow: 0 4px 24px rgba(255,180,0,0.3);
+}
+
+.btn-volver {
+  background: transparent;
+  color: #FFB400;
+  border: 1px solid rgba(255,180,0,0.35);
+  border-radius: 10px;
+  padding: 9px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.2s;
+}
+
+.btn-volver:hover {
+  background: rgba(255,180,0,0.08);
+  border-color: #FFB400;
+}

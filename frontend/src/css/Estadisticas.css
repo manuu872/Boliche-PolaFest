@@ -1,0 +1,156 @@
+.estadisticas-container {
+  color: #e0e0e0;
+  padding: 2rem;
+  background-color: #0a0a0a;
+  min-height: 100vh;
+}
+
+.estadisticas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.titulo-egipcio {
+  font-size: 1.8rem;
+  color: #FFD700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  margin: 0;
+}
+
+/* Boton PDF */
+.btn-pdf {
+  background: linear-gradient(135deg, #c0392b, #96281b);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s;
+}
+.btn-pdf:hover { opacity: 0.85; }
+
+/* KPI grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.kpi-card {
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-top: 3px solid #FFD700;
+  border-radius: 10px;
+  padding: 1.2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.kpi-label {
+  font-size: 0.78rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.kpi-valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+/* Secciones de tablas */
+.estadisticas-tablas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+
+.est-seccion {
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 1.2rem;
+}
+
+.est-subtitulo {
+  font-size: 1rem;
+  color: #FFD700;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #2a2a2a;
+  font-weight: 600;
+}
+
+.est-alerta {
+  color: #f87171;
+}
+
+.est-vacio {
+  color: #555;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+}
+
+/* Tablas */
+.tabla-est {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.tabla-est th {
+  background: #1e1e1e;
+  color: #FFD700;
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid #333;
+}
+
+.tabla-est td {
+  padding: 0.45rem 0.7rem;
+  border-bottom: 1px solid #1a1a1a;
+  color: #ccc;
+}
+
+.tabla-est tr:hover td {
+  background: #1c1c1c;
+}
+
+.td-monto {
+  color: #FFD700;
+  font-weight: 600;
+  text-align: right;
+}
+
+.td-rank {
+  color: #555;
+  font-size: 0.8rem;
+  width: 2.5rem;
+}
+
+.td-stock {
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Filas de stock */
+.fila-critica td {
+  color: #f87171 !important;
+  background: rgba(248, 113, 113, 0.05);
+}
+
+.fila-advertencia td {
+  color: #fbbf24 !important;
+  background: rgba(251, 191, 36, 0.04);
+}

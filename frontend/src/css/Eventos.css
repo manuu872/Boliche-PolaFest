@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+.eventos-container {
+  background-color: #080808;
+  background-image: radial-gradient(ellipse at 50% -5%, rgba(255,180,0,0.07) 0%, transparent 55%);
+  min-height: 100vh;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  color: #e0e0e0;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.titulo-egipcio {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FFB400;
+  text-shadow: 0 0 20px rgba(255,180,0,0.35);
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+/* ── CARRUSEL DE CARDS ── */
+.carrusel {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0.5rem 0 1rem;
+}
+
+.evento-card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 18px;
+  width: 300px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+  animation: fadeIn 0.5s ease forwards;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.evento-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,180,0,0.35);
+  box-shadow: 0 12px 40px rgba(255,180,0,0.15);
+}
+
+.evento-imagen {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+.evento-info {
+  padding: 1.1rem 1.2rem 1.2rem;
+  text-align: left;
+}
+
+.evento-info h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #FFB400;
+  margin: 0 0 0.6rem;
+}
+
+.evento-info p {
+  color: #999;
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+.evento-info p strong {
+  color: #ccc;
+}
+
+/* ── BOTONES DE EVENTO ── */
+.botones-evento {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 1rem;
+}
+
+.btn-egipcio {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #FFB400, #e09000);
+  color: #000;
+  border: none;
+  padding: 7px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-egipcio:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 14px rgba(255,180,0,0.35);
+}
+
+.btn-egipcio.editar {
+  background: linear-gradient(135deg, #2a6cff, #1a50cc);
+  color: #fff;
+}
+.btn-egipcio.editar:hover { box-shadow: 0 3px 14px rgba(42,108,255,0.35); }
+
+.btn-egipcio.eliminar {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #fff;
+}
+.btn-egipcio.eliminar:hover { box-shadow: 0 3px 14px rgba(231,76,60,0.4); }
+
+.btn-volver {
+  background: transparent;
+  color: #FFB400;
+  border: 1px solid rgba(255,180,0,0.35);
+  border-radius: 10px;
+  padding: 9px 22px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: all 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-volver:hover {
+  background: rgba(255,180,0,0.08);
+  border-color: #FFB400;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: #111;
+  border: 1px solid rgba(255,180,0,0.25);
+  border-radius: 18px;
+  padding: 2rem;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 0 50px rgba(255,180,0,0.15);
+  text-align: center;
+}
+
+.modal h2 {
+  font-family: 'Cinzel', serif;
+  color: #FFB400;
+  margin-bottom: 1.25rem;
+  font-size: 1.2rem;
+}
+
+.form-compra {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-compra input,
+.form-compra select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  background: #0d0d0d;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+}
+.form-compra input:focus,
+.form-compra select:focus {
+  border-color: #FFB400;
+  box-shadow: 0 0 0 3px rgba(255,180,0,0.1);
+}
+
+.btn-cancelar {
+  background: transparent;
+  border: 1px solid rgba(255,180,0,0.3);
+  color: #FFB400;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: 0.2s;
+}
+.btn-cancelar:hover {
+  background: rgba(231,76,60,0.1);
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+/* Detalle */
+.detalle-container {
+  background-color: #080808;
+  color: #e0e0e0;
+  text-align: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.detalle-img {
+  width: 100%;
+  max-width: 850px;
+  border-radius: 16px;
+  border: 2px solid rgba(255,180,0,0.25);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 30px rgba(255,180,0,0.12);
+}

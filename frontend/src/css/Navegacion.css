@@ -1,0 +1,65 @@
+
+.barra-navegacion-vertical {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 15px 10px;
+  box-shadow: 0 0 25px gold;
+  z-index: 999;
+  width: 150px;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.barra-navegacion-vertical button {
+  background-color: black;
+  color: gold;
+  border: 2px solid gold;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-family: "Cinzel", serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.barra-navegacion-vertical button:hover {
+  background-color: gold;
+  color: black;
+  transform: scale(1.08);
+  box-shadow: 0 0 15px gold;
+}
+
+
+.barra-navegacion-vertical:hover {
+  box-shadow: 0 0 35px gold;
+}
+
+
+.main-content {
+  margin-left: 0;
+  margin-top: 40px;
+  margin-bottom: 150px; 
+}
+
+
+body {
+  background-color: black;
+  color: gold;
+  font-family: "Cinzel", serif;
+  margin: 0;
+}
+
+
+h1, h2, h3, h4 {
+  text-shadow: 0 0 15px gold;
+}

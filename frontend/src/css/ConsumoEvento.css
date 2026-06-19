@@ -1,0 +1,76 @@
+.consumos-container {
+  background-color: #000;
+  min-height: 100vh;
+  color: #ffd700;
+  padding: 40px;
+  font-family: "Cinzel", serif;
+  text-align: center;
+}
+
+.titulo-egipcio {
+  font-size: 2.3rem;
+  color: gold;
+  text-shadow: 0 0 10px gold;
+  margin-bottom: 25px;
+}
+
+.btn-volver {
+  background-color: gold;
+  color: black;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 30px;
+  transition: all 0.2s ease;
+}
+.btn-volver:hover {
+  background-color: #ffcc00;
+  box-shadow: 0 0 10px gold;
+}
+
+.cargando {
+  font-style: italic;
+  margin-top: 50px;
+  font-size: 1.2rem;
+}
+
+.tabla-consumos {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+  background-color: #111;
+  border: 1px solid gold;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+  border-radius: 10px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+th {
+  background-color: #222;
+  color: gold;
+  text-transform: uppercase;
+}
+
+td {
+  color: white;
+}
+
+tr:hover {
+  background-color: rgba(255, 215, 0, 0.1);
+}
+
+td:nth-child(6) {
+  color: #ff4747;
+  font-weight: bold;
+}
