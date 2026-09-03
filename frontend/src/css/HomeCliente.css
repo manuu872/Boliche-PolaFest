@@ -1,0 +1,560 @@
+/* ── Base ── */
+.hc-page {
+  min-height: 100vh;
+  background: #080808;
+  color: #e0e0e0;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header glassmorphism ── */
+.hc-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.75rem;
+  background: rgba(8, 8, 8, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.12);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hc-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hc-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.hc-brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFD700;
+  letter-spacing: 0.5px;
+}
+
+.hc-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.hc-avatar {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFD700;
+  flex-shrink: 0;
+}
+
+.hc-username {
+  font-size: 0.88rem;
+  color: #aaa;
+}
+
+.hc-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.hc-logout:hover {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: #f87171;
+}
+
+/* ── Content ── */
+.hc-content {
+  flex: 1;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── Banner evento ── */
+.hc-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+}
+
+.hc-banner-icon {
+  color: #FFD700;
+  flex-shrink: 0;
+}
+
+.hc-banner-text {
+  font-size: 0.85rem;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+.hc-banner-nombre {
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.hc-banner-fecha {
+  color: #888;
+  font-size: 0.78rem;
+}
+
+/* ── Mensaje éxito ── */
+.hc-msg-ok {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  padding: 0.8rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ── Tarjeta Virtual VIP ── */
+.hc-card-vip {
+  position: relative;
+  background: linear-gradient(135deg, #111 0%, #191500 50%, #111 100%);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 20px;
+  padding: 1.75rem;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.08), 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.hc-card-shine {
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  width: 60%;
+  height: 180%;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,215,0,0.04) 50%, transparent 60%);
+  pointer-events: none;
+}
+
+.hc-card-row1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.hc-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hc-chip-rect {
+  width: 34px;
+  height: 26px;
+  background: linear-gradient(135deg, #c9a227, #e8c84a, #a07818);
+  border-radius: 4px;
+  border: 1px solid rgba(255,215,0,0.5);
+  position: relative;
+  flex-shrink: 0;
+}
+.hc-chip-rect::after {
+  content: '';
+  position: absolute;
+  inset: 4px 5px;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 2px;
+}
+
+.hc-card-brand {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(255,215,0,0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hc-card-estado {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+.hc-card-estado.activa {
+  background: rgba(34,197,94,0.12);
+  color: #22c55e;
+  border: 1px solid rgba(34,197,94,0.3);
+}
+.hc-card-estado.inactiva {
+  background: rgba(239,68,68,0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.hc-saldo-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+}
+
+.hc-saldo-monto {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #FFD700;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.hc-card-numero {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  color: #777;
+  letter-spacing: 3px;
+}
+
+/* ── Recarga section ── */
+.hc-recarga {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.hc-recarga-title {
+  font-size: 0.82rem;
+  color: #888;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.hc-montos-rapidos {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.hc-monto-btn {
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  color: #FFD700;
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.hc-monto-btn:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.5);
+}
+.hc-monto-btn.activo {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #FFD700;
+}
+
+.hc-input-row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.hc-input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.hc-input:focus { border-color: rgba(255,215,0,0.4); }
+
+.hc-btn-cargar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #FFD700, #e0a800);
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.hc-btn-cargar:hover { opacity: 0.88; }
+
+.hc-btn-verificar {
+  background: transparent;
+  border: 1px solid rgba(255,215,0,0.3);
+  color: #FFD700;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+.hc-btn-verificar:hover:not(:disabled) { background: rgba(255,215,0,0.08); }
+.hc-btn-verificar:disabled { opacity: 0.35; cursor: default; }
+
+/* ── Historial ── */
+.hc-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #FFD700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 0.75rem;
+}
+
+.hc-historial {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom scrollbar */
+.hc-historial::-webkit-scrollbar { width: 4px; }
+.hc-historial::-webkit-scrollbar-track { background: transparent; }
+.hc-historial::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 4px; }
+.hc-historial::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+
+.hc-tx-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #0f0f0f;
+  border: 1px solid #171717;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.hc-tx-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.hc-tx-icon.consumo {
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+}
+.hc-tx-icon.recarga {
+  background: rgba(34,197,94,0.1);
+  color: #22c55e;
+}
+
+.hc-tx-body { flex: 1; min-width: 0; }
+
+.hc-tx-evento {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 0.15rem;
+}
+
+.hc-tx-fecha {
+  font-size: 0.72rem;
+  color: #444;
+  margin-bottom: 0.4rem;
+}
+
+.hc-tx-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.hc-pill {
+  background: #1a1a1a;
+  color: #999;
+  font-size: 0.72rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+  border: 1px solid #222;
+}
+
+.hc-tx-monto {
+  font-size: 1rem;
+  font-weight: 800;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hc-tx-monto.negativo { color: #ef4444; }
+.hc-tx-monto.positivo { color: #22c55e; }
+
+.hc-vacio {
+  color: #333;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+/* ── Carta de barra ── */
+.hc-barra-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hc-barra-busqueda {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hc-barra-busqueda-icon {
+  position: absolute;
+  left: 10px;
+  color: #555;
+  pointer-events: none;
+}
+
+.hc-barra-input {
+  width: 100%;
+  padding: 0.55rem 0.9rem 0.55rem 2.1rem;
+  background: #0f0f0f;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  color: #e0e0e0;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.hc-barra-input:focus { border-color: rgba(255,215,0,0.3); }
+
+.hc-chips-filtro {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.hc-chip-filtro {
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  border: 1px solid #2a2a2a;
+  background: transparent;
+  color: #666;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.hc-chip-filtro:hover { border-color: rgba(255,215,0,0.3); color: #aaa; }
+.hc-chip-filtro.activo {
+  background: rgba(255,215,0,0.1);
+  border-color: rgba(255,215,0,0.4);
+  color: #FFD700;
+  font-weight: 600;
+}
+
+.hc-barra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.hc-bebida-card {
+  background: #0f0f0f;
+  border: 1px solid #1a1a1a;
+  border-radius: 14px;
+  padding: 1.1rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.hc-bebida-card:hover { border-color: rgba(255,215,0,0.2); }
+
+.hc-bebida-icon {
+  color: rgba(255,215,0,0.5);
+  margin-bottom: 0.2rem;
+}
+
+.hc-bebida-nombre {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  line-height: 1.2;
+}
+
+.hc-bebida-tipo {
+  font-size: 0.72rem;
+  color: #555;
+}
+
+.hc-bebida-precio {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFD700;
+  margin-top: 0.15rem;
+}
+
+/* ── Sin tarjeta asignada ── */
+.hc-sin-tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem;
+  background: #0f0f0f;
+  border: 1px dashed #222;
+  border-radius: 16px;
+  color: #444;
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 520px) {
+  .hc-saldo-monto { font-size: 1.9rem; }
+  .hc-barra-grid { grid-template-columns: repeat(2, 1fr); }
+}

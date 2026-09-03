@@ -122,6 +122,208 @@
   flex-wrap: wrap;
 }
 
+/* ── NUEVO DISEÑO BebidasList ── */
+.bl-page {
+  background: #080808;
+  min-height: 100vh;
+  padding: 2rem;
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+}
+
+.bl-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bl-titulo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #FFD700;
+  margin: 0;
+}
+
+.bl-subtitulo {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 0.2rem 0 0;
+}
+
+.bl-btn-nuevo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #FFD700, #e0a800);
+  color: #000;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.bl-btn-nuevo:hover { opacity: 0.85; }
+
+/* Filtros */
+.bl-filtros {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.bl-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bl-input-icon {
+  position: absolute;
+  left: 10px;
+  color: #555;
+  pointer-events: none;
+}
+
+.bl-input {
+  padding: 0.5rem 0.8rem 0.5rem 2rem;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.88rem;
+  min-width: 200px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.bl-input:focus { border-color: rgba(255,215,0,0.5); }
+
+.bl-select {
+  padding: 0.5rem 0.8rem;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.88rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.bl-select:focus { border-color: rgba(255,215,0,0.5); }
+
+.bl-btn-limpiar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: 1px solid #c0392b;
+  color: #e74c3c;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.bl-btn-limpiar:hover { background: rgba(192,57,43,0.15); }
+
+/* Tabla */
+.bl-table-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1e1e1e;
+  margin-bottom: 1.5rem;
+}
+
+.bl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.bl-table th {
+  background: #111;
+  color: #FFD700;
+  padding: 0.7rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid #222;
+}
+
+.bl-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #151515;
+  background: #0d0d0d;
+  color: #ccc;
+  vertical-align: middle;
+}
+
+.bl-table tbody tr:hover td { background: #131313; }
+
+.bl-td-id { color: #444; font-size: 0.8rem; }
+.bl-td-nombre { color: #e0e0e0; font-weight: 500; }
+.bl-td-precio { color: #FFD700; font-weight: 600; }
+
+.bl-tipo {
+  background: rgba(255,215,0,0.08);
+  color: #FFD700;
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 20px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.78rem;
+}
+
+/* Badges de stock */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-verde  { background: rgba(34,197,94,0.12);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+.badge-naranja{ background: rgba(251,146,60,0.12); color: #fb923c; border: 1px solid rgba(251,146,60,0.3); }
+.badge-rojo   { background: rgba(239,68,68,0.12);  color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+/* Botones icono */
+.bl-acciones {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.bl-icon-btn {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 0.38rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.bl-icon-btn.editar  { color: #60a5fa; }
+.bl-icon-btn.editar:hover  { background: rgba(96,165,250,0.12); border-color: #60a5fa; }
+.bl-icon-btn.eliminar{ color: #f87171; }
+.bl-icon-btn.eliminar:hover{ background: rgba(248,113,113,0.12); border-color: #f87171; }
+
+.bl-vacio {
+  text-align: center;
+  padding: 2rem;
+  color: #444;
+  font-size: 0.9rem;
+  background: #0d0d0d;
+}
+
+/* ── FIN NUEVO DISEÑO ── */
+
 .btn-volver {
   background: transparent;
   color: #FFB400;

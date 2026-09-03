@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../css/Bebidas.css";
+import { Pencil, Trash2, Plus, Search, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import BotonVolver from "../../components/BotonVolver";
+import "../../css/Bebidas.css";
+
+const API = import.meta.env.VITE_API_URL;
+
+function StockBadge({ stock }) {
+  if (stock === 0)
+    return <span className="badge badge-rojo">Sin stock</span>;
+  if (stock <= 10)
+    return <span className="badge badge-naranja">{stock} uds.</span>;
+  return <span className="badge badge-verde">{stock} uds.</span>;
+}
 
 export default function BebidasList() {
   const navigate = useNavigate();
@@ -10,158 +22,127 @@ export default function BebidasList() {
   const [tipoFiltro, setTipoFiltro] = useState("todos");
   const [stockFiltro, setStockFiltro] = useState("todos");
 
-  
   useEffect(() => {
-    const fetchBebidas = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/productos`);
-        if (!res.ok) throw new Error("Error al obtener productos");
-        const data = await res.json();
-        setBebidas(data);
-      } catch (error) {
-        console.error("Error al cargar productos:", error);
-      }
-    };
-
-    fetchBebidas();
+    fetch(`${API}/productos`)
+      .then((r) => r.json())
+      .then(setBebidas)
+      .catch(console.error);
   }, []);
 
-
   const eliminarBebida = async (id_producto) => {
-    const confirmar = window.confirm("¿Seguro que querés eliminar esta bebida?");
-    if (!confirmar) return;
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/productos/${id_producto}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        setBebidas(bebidas.filter((b) => b.id_producto !== id_producto));
-      } else {
-        console.error("Error al eliminar producto");
-      }
-    } catch (error) {
-      console.error("Error al eliminar:", error);
-    }
+    if (!window.confirm("¿Seguro que querés eliminar esta bebida?")) return;
+    const res = await fetch(`${API}/productos/${id_producto}`, { method: "DELETE" });
+    if (res.ok) setBebidas(bebidas.filter((b) => b.id_producto !== id_producto));
   };
 
   const tipos = ["todos", ...new Set(bebidas.map((b) => b.tipo).filter(Boolean))];
 
-  const bebidasFiltradas = bebidas.filter((b) => {
-    const coincideNombre = b.nombre.toLowerCase().includes(busqueda.toLowerCase());
-    const coincideTipo = tipoFiltro === "todos" || b.tipo === tipoFiltro;
-    const coincideStock =
+  const filtradas = bebidas.filter((b) => {
+    const nombre = b.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const tipo = tipoFiltro === "todos" || b.tipo === tipoFiltro;
+    const stock =
       stockFiltro === "todos" ||
       (stockFiltro === "bajo" && b.stock > 0 && b.stock <= 10) ||
       (stockFiltro === "sin" && b.stock === 0);
-    return coincideNombre && coincideTipo && coincideStock;
+    return nombre && tipo && stock;
   });
 
-  return (
-    <div className="bebidas-container">
-      <h1 className="titulo-egipcio">Listado de Bebidas</h1>
+  const hayFiltros = busqueda || tipoFiltro !== "todos" || stockFiltro !== "todos";
 
-      <button className="btn-crear" onClick={() => navigate("/bebidas/nueva")}>
-        + Agregar bebida
-      </button>
+  return (
+    <div className="bl-page">
+      {/* Header */}
+      <div className="bl-header">
+        <div>
+          <h1 className="bl-titulo">Bebidas</h1>
+          <p className="bl-subtitulo">{filtradas.length} producto{filtradas.length !== 1 ? "s" : ""} encontrado{filtradas.length !== 1 ? "s" : ""}</p>
+        </div>
+        <button className="bl-btn-nuevo" onClick={() => navigate("/bebidas/nueva")}>
+          <Plus size={16} /> Agregar bebida
+        </button>
+      </div>
 
       {/* Filtros */}
-      <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-        <input
-          type="text"
-          placeholder="Buscar por nombre..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-          style={{ padding: "0.5rem 0.8rem", borderRadius: "8px", border: "1px solid #444", backgroundColor: "#1a1a1a", color: "#fff", fontSize: "0.9rem", minWidth: "200px" }}
-        />
-        <select
-          value={tipoFiltro}
-          onChange={(e) => setTipoFiltro(e.target.value)}
-          style={{ padding: "0.5rem 0.8rem", borderRadius: "8px", border: "1px solid #444", backgroundColor: "#1a1a1a", color: "#fff", fontSize: "0.9rem" }}
-        >
+      <div className="bl-filtros">
+        <div className="bl-input-wrap">
+          <Search size={15} className="bl-input-icon" />
+          <input
+            type="text"
+            placeholder="Buscar por nombre..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            className="bl-input"
+          />
+        </div>
+        <select value={tipoFiltro} onChange={(e) => setTipoFiltro(e.target.value)} className="bl-select">
           {tipos.map((t) => (
             <option key={t} value={t}>{t === "todos" ? "Todos los tipos" : t}</option>
           ))}
         </select>
-        <select
-          value={stockFiltro}
-          onChange={(e) => setStockFiltro(e.target.value)}
-          style={{ padding: "0.5rem 0.8rem", borderRadius: "8px", border: "1px solid #444", backgroundColor: "#1a1a1a", color: "#fff", fontSize: "0.9rem" }}
-        >
+        <select value={stockFiltro} onChange={(e) => setStockFiltro(e.target.value)} className="bl-select">
           <option value="todos">Todo el stock</option>
           <option value="bajo">Stock bajo (≤10)</option>
           <option value="sin">Sin stock</option>
         </select>
-        {(busqueda || tipoFiltro !== "todos" || stockFiltro !== "todos") && (
-          <button
-            onClick={() => { setBusqueda(""); setTipoFiltro("todos"); setStockFiltro("todos"); }}
-            style={{ padding: "0.5rem 0.8rem", borderRadius: "8px", border: "1px solid #ff5252", backgroundColor: "transparent", color: "#ff5252", cursor: "pointer", fontSize: "0.85rem" }}
-          >
-            Limpiar filtros
+        {hayFiltros && (
+          <button className="bl-btn-limpiar" onClick={() => { setBusqueda(""); setTipoFiltro("todos"); setStockFiltro("todos"); }}>
+            <X size={13} /> Limpiar
           </button>
         )}
-        <span style={{ color: "#888", fontSize: "0.85rem" }}>{bebidasFiltradas.length} resultado{bebidasFiltradas.length !== 1 ? "s" : ""}</span>
       </div>
 
-      <table className="tabla-egipcia">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {bebidasFiltradas.length > 0 ? (
-            bebidasFiltradas.map((b) => (
-              <tr key={b.id_producto}>
-                <td>{b.id_producto}</td>
-                <td>{b.nombre}</td>
-                <td>{b.tipo}</td>
-                <td>${b.precio.toLocaleString("es-AR")}</td>
-                <td
-                  style={{
-                    color:
-                      b.stock <= 5 ? "#ff5252" : b.stock < 15 ? "#ffd54f" : "#00e676",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {b.stock}
-                </td>
-                <td className="acciones-egipcias">
-                  <button
-                    className="btn-egipcio editar"
-                    onClick={() => navigate(`/bebidas/editar/${b.id_producto}`)}
-                  >
-                    Editar
-                  </button>
-
-                  <button
-                    className="btn-egipcio eliminar"
-                    onClick={() => eliminarBebida(b.id_producto)}
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+      {/* Tabla */}
+      <div className="bl-table-wrap">
+        <table className="bl-table">
+          <thead>
             <tr>
-              <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
-                {bebidas.length === 0 ? "No hay bebidas cargadas" : "No hay resultados para los filtros aplicados"}
-              </td>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acciones</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-      <div>
-        <BotonVolver ruta="/" />
+          </thead>
+          <tbody>
+            <AnimatePresence>
+              {filtradas.length > 0 ? filtradas.map((b) => (
+                <motion.tr
+                  key={b.id_producto}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <td className="bl-td-id">#{b.id_producto}</td>
+                  <td className="bl-td-nombre">{b.nombre}</td>
+                  <td><span className="bl-tipo">{b.tipo}</span></td>
+                  <td className="bl-td-precio">${Number(b.precio).toLocaleString("es-AR")}</td>
+                  <td><StockBadge stock={b.stock} /></td>
+                  <td>
+                    <div className="bl-acciones">
+                      <button className="bl-icon-btn editar" title="Editar" onClick={() => navigate(`/bebidas/editar/${b.id_producto}`)}>
+                        <Pencil size={15} />
+                      </button>
+                      <button className="bl-icon-btn eliminar" title="Eliminar" onClick={() => eliminarBebida(b.id_producto)}>
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  </td>
+                </motion.tr>
+              )) : (
+                <tr>
+                  <td colSpan="6" className="bl-vacio">
+                    {bebidas.length === 0 ? "No hay bebidas cargadas" : "Sin resultados para los filtros aplicados"}
+                  </td>
+                </tr>
+              )}
+            </AnimatePresence>
+          </tbody>
+        </table>
       </div>
+
+      <BotonVolver ruta="/" />
     </div>
   );
 }

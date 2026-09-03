@@ -1,80 +1,154 @@
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background-color: #000000;
-  color: #f1c40f;
-}
-
-.home-container {
-  text-align: center;
+.home-vip {
   min-height: 100vh;
+  background: #080808;
   display: flex;
   flex-direction: column;
 }
 
-
-.navbar {
+/* ── Header ── */
+.home-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
-  font-weight: bold;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #1f1f1f;
+  background: #0d0d0d;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.navbar a {
-  text-decoration: none;
-  color: #f1c40f;
-  margin: 0 15px;
-  transition: color 0.3s, transform 0.3s;
-}
-
-.navbar a:hover {
-  color: white;
-  transform: scale(1.05);
-}
-
-
-.logo-section {
-  text-align: center;
-  margin: 40px 0;
-}
-
-.logo-home {
-  width: 500px;  
-  max-width: 80%; 
-}
-
-.logo-section h1 {
-  margin-top: 15px;
-  font-size: 2rem;
-  color: #f1c40f;
-}
-
-
-.cards-container {
+.home-header-left {
   display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap; 
-  margin: 40px auto;
-  width: 90%;
-  max-width: 1200px;
+  align-items: center;
+  gap: 0.9rem;
 }
 
-.card {
+.home-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.home-brand {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFD700;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.home-rol {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  letter-spacing: 0.5px;
+}
+
+.home-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-username {
+  font-size: 0.88rem;
+  color: #aaa;
+}
+
+.home-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   background: transparent;
-  padding: 15px;
-  width: 250px;
-  transition: transform 0.3s, background 0.3s;
+  border: 1px solid #c0392b;
+  color: #e74c3c;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.home-logout:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+/* ── Main grid ── */
+.home-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 860px;
+}
+
+@media (max-width: 700px) {
+  .home-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 420px) {
+  .home-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Card ── */
+.home-card {
+  position: relative;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+
+.home-card:hover {
+  border-color: #FFD700;
+}
+
+.home-card:hover .home-card-glow {
+  opacity: 1;
+}
+
+.home-card-icon {
+  color: #FFD700;
+  margin-bottom: 0.4rem;
+}
+
+.home-card-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  margin: 0;
   text-align: center;
 }
 
-.card img {
-  width: 100%;
-  max-width: 200px;
-  height: auto;
+.home-card-desc {
+  font-size: 0.78rem;
+  color: #555;
+  margin: 0;
+  text-align: center;
 }
 
-.card:hover {
-  transform: scale(1.1);
+/* Efecto glow en hover */
+.home-card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 215, 0, 0.07) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }

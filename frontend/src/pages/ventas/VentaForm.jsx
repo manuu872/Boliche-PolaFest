@@ -1,298 +1,309 @@
-
-
-import React, { useState, useEffect } from "react";
-import "../../css/VentaForm.css";
+import React, { useState, useEffect, useRef } from "react";
+import { CreditCard, Search, Trash2, Plus, Minus, ShoppingCart, CheckCircle, XCircle, Wine } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import BotonVolver from "../../components/BotonVolver";
+import "../../css/VentaForm.css";
+
+const API = import.meta.env.VITE_API_URL;
 
 export default function VentaForm() {
+  const inputRef = useRef(null);
   const [codigoTarjeta, setCodigoTarjeta] = useState("");
   const [usuario, setUsuario] = useState(null);
   const [saldo, setSaldo] = useState(0);
   const [productos, setProductos] = useState([]);
   const [eventos, setEventos] = useState([]);
   const [eventoSeleccionado, setEventoSeleccionado] = useState("");
-  const [productoSeleccionado, setProductoSeleccionado] = useState("");
-  const [cantidad, setCantidad] = useState(1);
-  const [productosVenta, setProductosVenta] = useState([]);
+  const [carrito, setCarrito] = useState([]);
   const [error, setError] = useState("");
+  const [tarjetaOk, setTarjetaOk] = useState(null); // null | true | false
   const [loading, setLoading] = useState(false);
-  const [tarjetaActiva, setTarjetaActiva] = useState(true);
   const [tarjetaId, setTarjetaId] = useState(null);
+  const [confirmado, setConfirmado] = useState(false);
 
   useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        const [resProd, resEvent] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL}/productos`),
-          fetch(`${import.meta.env.VITE_API_URL}/eventos`),
-        ]);
-        setProductos(await resProd.json());
-        setEventos(await resEvent.json());
-      } catch (err) {
-        console.error("Error al cargar productos o eventos:", err);
-      }
-    };
-    cargarDatos();
+    Promise.all([
+      fetch(`${API}/productos`).then((r) => r.json()),
+      fetch(`${API}/eventos`).then((r) => r.json()),
+    ]).then(([prods, evts]) => {
+      setProductos(prods);
+      setEventos(evts);
+    }).catch(console.error);
   }, []);
 
   const buscarTarjeta = async () => {
-    if (!codigoTarjeta.trim()) {
-      setError("Ingresá un código válido");
-      return;
-    }
-
+    if (!codigoTarjeta.trim()) return;
     setLoading(true);
     setError("");
     setUsuario(null);
-    setSaldo(0);
+    setTarjetaOk(null);
+    setCarrito([]);
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/tarjetas/codigo/${codigoTarjeta}`
-      );
-
-      if (!response.ok) {
-        setError(response.status === 404 ? "❌ No se encontró la tarjeta" : "⚠️ Error al buscar la tarjeta");
-        setLoading(false);
+      const res = await fetch(`${API}/tarjetas/codigo/${codigoTarjeta}`);
+      if (!res.ok) {
+        setTarjetaOk(false);
+        setError(res.status === 404 ? "Tarjeta no encontrada" : "Error al buscar la tarjeta");
         return;
       }
-
-      const data = await response.json();
-
+      const data = await res.json();
       if (!data.activa) {
-        setTarjetaActiva(false);
-        setError("❌ Esta tarjeta está desactivada. No puede realizar compras.");
-        setLoading(false);
+        setTarjetaOk(false);
+        setError("Tarjeta desactivada. No puede realizar compras.");
         return;
       }
-
-      setTarjetaActiva(true);
+      setTarjetaOk(true);
       setTarjetaId(data.id_tarjeta);
-      setUsuario({
-        nombre: data.usuario?.nombre || "Usuario sin nombre",
-        id_usuario: data.id_usuario,
-      });
+      setUsuario({ nombre: data.usuario?.nombre || "Sin nombre", apellido: data.usuario?.apellido || "" });
       setSaldo(Number(data.saldo));
-      setError("");
-    } catch (err) {
-      console.error("Error al buscar tarjeta:", err);
-      setError("Error de conexión con el servidor");
+    } catch {
+      setTarjetaOk(false);
+      setError("Error de conexión");
     } finally {
       setLoading(false);
     }
   };
 
-  const agregarProducto = () => {
-    if (!tarjetaActiva) {
-      alert("❌ No se pueden agregar productos: la tarjeta está desactivada.");
-      return;
-    }
-
-    if (!productoSeleccionado) {
-      alert("Seleccioná un producto");
-      return;
-    }
-
-    const prod = productos.find(
-      (p) => p.id_producto === parseInt(productoSeleccionado)
-    );
-    if (!prod) return;
-
-    
-    if (prod.stock <= 0) {
-      alert(`❌ No queda stock del producto "${prod.nombre}".`);
-      return;
-    }
-
-    if (cantidad > prod.stock) {
-      alert(`⚠️ Solo quedan ${prod.stock} unidades disponibles de "${prod.nombre}".`);
-      return;
-    }
-
-    const nuevo = {
-      nombre: prod.nombre,
-      cantidad,
-      precio: Number(prod.precio),
-    };
-
-    setProductosVenta([...productosVenta, nuevo]);
-    setCantidad(1);
-    setProductoSeleccionado("");
+  const agregarAlCarrito = (prod) => {
+    if (prod.stock <= 0) return;
+    setCarrito((prev) => {
+      const existe = prev.find((p) => p.id_producto === prod.id_producto);
+      if (existe) {
+        if (existe.cantidad >= prod.stock) return prev;
+        return prev.map((p) => p.id_producto === prod.id_producto ? { ...p, cantidad: p.cantidad + 1 } : p);
+      }
+      return [...prev, { ...prod, cantidad: 1, precio: Number(prod.precio) }];
+    });
   };
 
-  const total = productosVenta.reduce(
-    (sum, p) => sum + p.cantidad * p.precio,
-    0
-  );
+  const cambiarCantidad = (id, delta) => {
+    setCarrito((prev) =>
+      prev
+        .map((p) => p.id_producto === id ? { ...p, cantidad: p.cantidad + delta } : p)
+        .filter((p) => p.cantidad > 0)
+    );
+  };
+
+  const total = carrito.reduce((sum, p) => sum + p.cantidad * p.precio, 0);
+  const saldoInsuficiente = total > saldo;
 
   const confirmarVenta = async () => {
-    if (!usuario) {
-      alert("Primero buscá una tarjeta válida");
-      return;
-    }
-    if (!tarjetaActiva) {
-      alert("❌ No se puede realizar la venta. La tarjeta está desactivada.");
-      return;
-    }
-    if (!eventoSeleccionado) {
-      alert("Seleccioná un evento");
-      return;
-    }
-    if (productosVenta.length === 0) {
-      alert("No hay productos cargados");
-      return;
-    }
-    if (total > saldo) {
-      alert("Saldo insuficiente");
-      return;
-    }
+    if (!usuario || !tarjetaOk) return;
+    if (!eventoSeleccionado) { alert("Seleccioná un evento"); return; }
+    if (carrito.length === 0) { alert("El carrito está vacío"); return; }
+    if (saldoInsuficiente) { alert("Saldo insuficiente"); return; }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/ventas`, {
+      const res = await fetch(`${API}/ventas`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id_tarjeta: tarjetaId,
           id_evento: parseInt(eventoSeleccionado),
           total,
-          productos: productosVenta.map((p) => ({
-            id_producto: productos.find((x) => x.nombre === p.nombre)
-              .id_producto,
+          productos: carrito.map((p) => ({
+            id_producto: p.id_producto,
             cantidad: p.cantidad,
             subtotal: p.cantidad * p.precio,
           })),
         }),
       });
-
-      if (!res.ok) throw new Error(await res.text());
-
-      await res.json();
+      if (!res.ok) throw new Error();
       setSaldo(saldo - total);
-      setProductosVenta([]);
+      setCarrito([]);
       setEventoSeleccionado("");
-      alert("✅ Venta realizada con éxito");
-    } catch (error) {
-      console.error("Error al confirmar venta:", error);
+      setConfirmado(true);
+      setTimeout(() => setConfirmado(false), 2500);
+    } catch {
       alert("Error al conectar con el servidor");
     }
   };
 
-  return (
-    <div className="venta-container">
-      <h1 className="titulo-egipcio">Cajero PolaFest</h1>
+  const resetear = () => {
+    setCodigoTarjeta("");
+    setUsuario(null);
+    setSaldo(0);
+    setCarrito([]);
+    setTarjetaOk(null);
+    setError("");
+    setEventoSeleccionado("");
+    setTimeout(() => inputRef.current?.focus(), 100);
+  };
 
-      <div className="tarjeta-section">
-        <label>Código de Tarjeta:</label>
-        <div className="tarjeta-input">
+  return (
+    <div className="pos-page">
+
+      {/* ── Barra superior: escáner tarjeta ── */}
+      <div className="pos-topbar">
+        <div className="pos-brand">
+          <CreditCard size={20} color="#FFD700" />
+          <span>Cajero — PolaFest</span>
+        </div>
+
+        <div className={`pos-scanner ${tarjetaOk === true ? "scanner-ok" : tarjetaOk === false ? "scanner-error" : ""}`}>
+          <div className="pos-scanner-icon">
+            {tarjetaOk === true  ? <CheckCircle size={18} color="#22c55e" /> :
+             tarjetaOk === false ? <XCircle size={18} color="#ef4444" /> :
+                                   <CreditCard size={18} color="#555" />}
+          </div>
           <input
+            ref={inputRef}
+            className="pos-scanner-input"
             type="text"
+            placeholder="Código de tarjeta — Enter para buscar"
             value={codigoTarjeta}
             onChange={(e) => setCodigoTarjeta(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && buscarTarjeta()}
-            placeholder="Acercá la tarjeta o ingresá el código..."
             autoFocus
           />
-          <button
-            className="btn-egipcio"
-            onClick={buscarTarjeta}
-            disabled={loading}
-          >
-            {loading ? "Buscando..." : "Buscar"}
+          <button className="pos-scanner-btn" onClick={buscarTarjeta} disabled={loading}>
+            <Search size={15} /> {loading ? "Buscando..." : "Buscar"}
           </button>
+          {usuario && (
+            <button className="pos-scanner-reset" onClick={resetear}>Nueva venta</button>
+          )}
         </div>
 
-        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-
-        {usuario && tarjetaActiva && (
-          <div className="datos-usuario">
-            <p>
-              <strong>Usuario:</strong> {usuario.nombre}
-            </p>
-            <p>
-              <strong>Saldo actual:</strong> ${Number(saldo).toFixed(2)}
-            </p>
-          </div>
-        )}
+        {error && <span className="pos-error">{error}</span>}
       </div>
-      {usuario && tarjetaActiva && (
-        <div className="eventos-section">
-          <h2>Seleccionar Evento</h2>
+
+      {/* ── Layout POS ── */}
+      <div className="pos-layout">
+
+        {/* ── Panel izquierdo: catálogo táctil ── */}
+        <div className="pos-catalogo">
+          <div className="pos-catalogo-header">
+            <Wine size={16} color="#FFD700" />
+            <span>Catálogo</span>
+            <span className="pos-catalogo-count">{productos.length} productos</span>
+          </div>
+
+          {/* Selector de evento */}
           <select
+            className="pos-select"
             value={eventoSeleccionado}
             onChange={(e) => setEventoSeleccionado(e.target.value)}
+            disabled={!usuario}
           >
-            <option value="">-- Seleccioná un evento --</option>
+            <option value="">— Seleccioná un evento —</option>
             {eventos.map((e) => (
-              <option key={e.id_evento} value={e.id_evento}>
-                {e.nombre}
-              </option>
+              <option key={e.id_evento} value={e.id_evento}>{e.nombre}</option>
             ))}
           </select>
+
+          <div className="pos-grid">
+            {productos.map((prod) => {
+              const enCarrito = carrito.find((p) => p.id_producto === prod.id_producto);
+              const sinStock = prod.stock <= 0;
+              return (
+                <motion.button
+                  key={prod.id_producto}
+                  className={`pos-prod-card ${sinStock ? "sin-stock" : ""} ${enCarrito ? "en-carrito" : ""}`}
+                  whileTap={!sinStock && usuario ? { scale: 0.93 } : {}}
+                  onClick={() => usuario && !sinStock && agregarAlCarrito(prod)}
+                  disabled={sinStock || !usuario}
+                >
+                  <span className="pos-prod-nombre">{prod.nombre}</span>
+                  <span className="pos-prod-precio">${Number(prod.precio).toLocaleString("es-AR")}</span>
+                  <span className={`pos-prod-stock ${sinStock ? "rojo" : prod.stock <= 10 ? "naranja" : "verde"}`}>
+                    {sinStock ? "Sin stock" : `${prod.stock} uds.`}
+                  </span>
+                  {enCarrito && <span className="pos-prod-badge">{enCarrito.cantidad}</span>}
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
-      )}
-      {usuario && tarjetaActiva && (
-        <>
-          <div className="productos-section">
-            <h2>Agregar Productos</h2>
-            <div className="form-producto">
-              <select
-                value={productoSeleccionado}
-                onChange={(e) => setProductoSeleccionado(e.target.value)}
+
+        {/* ── Panel derecho: ticket ── */}
+        <div className="pos-ticket">
+
+          {/* Cliente */}
+          <div className={`pos-cliente ${!usuario ? "vacio" : ""}`}>
+            {usuario ? (
+              <>
+                <div className="pos-cliente-nombre">{usuario.nombre} {usuario.apellido}</div>
+                <div className="pos-saldo-label">Saldo disponible</div>
+                <div className={`pos-saldo-valor ${saldoInsuficiente ? "rojo" : ""}`}>
+                  ${Number(saldo).toLocaleString("es-AR")}
+                </div>
+              </>
+            ) : (
+              <div className="pos-cliente-vacio">
+                <CreditCard size={32} color="#333" />
+                <span>Buscá una tarjeta para comenzar</span>
+              </div>
+            )}
+          </div>
+
+          {/* Carrito */}
+          <div className="pos-carrito-header">
+            <ShoppingCart size={15} color="#FFD700" />
+            <span>Pedido</span>
+            {carrito.length > 0 && (
+              <button className="pos-limpiar" onClick={() => setCarrito([])}>Limpiar</button>
+            )}
+          </div>
+
+          <div className="pos-carrito-lista">
+            <AnimatePresence>
+              {carrito.length === 0 ? (
+                <p className="pos-carrito-vacio">Sin productos agregados</p>
+              ) : carrito.map((p) => (
+                <motion.div
+                  key={p.id_producto}
+                  className="pos-carrito-item"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                >
+                  <div className="pos-item-nombre">{p.nombre}</div>
+                  <div className="pos-item-controles">
+                    <button onClick={() => cambiarCantidad(p.id_producto, -1)}><Minus size={12} /></button>
+                    <span>{p.cantidad}</span>
+                    <button onClick={() => cambiarCantidad(p.id_producto, +1)} disabled={p.cantidad >= p.stock}><Plus size={12} /></button>
+                  </div>
+                  <div className="pos-item-subtotal">${(p.cantidad * p.precio).toLocaleString("es-AR")}</div>
+                  <button className="pos-item-remove" onClick={() => setCarrito(carrito.filter((x) => x.id_producto !== p.id_producto))}>
+                    <Trash2 size={13} />
+                  </button>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+
+          {/* Total */}
+          <div className="pos-total-row">
+            <span>Total</span>
+            <span className={`pos-total-val ${saldoInsuficiente ? "rojo" : ""}`}>
+              ${total.toLocaleString("es-AR")}
+            </span>
+          </div>
+          {saldoInsuficiente && <p className="pos-aviso-saldo">Saldo insuficiente</p>}
+
+          {/* Botón confirmar */}
+          <AnimatePresence mode="wait">
+            {confirmado ? (
+              <motion.div key="ok" className="pos-confirmado" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <CheckCircle size={22} /> Venta registrada
+              </motion.div>
+            ) : (
+              <motion.button
+                key="btn"
+                className="pos-btn-confirmar"
+                onClick={confirmarVenta}
+                disabled={!usuario || carrito.length === 0 || saldoInsuficiente || !eventoSeleccionado}
+                whileTap={{ scale: 0.97 }}
               >
-                <option value="">-- Seleccioná un producto --</option>
-                {productos.map((p) => (
-                  <option key={p.id_producto} value={p.id_producto}>
-                    {p.nombre} (${p.precio}) — Stock: {p.stock}
-                  </option>
-                ))}
-              </select>
+                Confirmar Cobro — Descontar Saldo
+              </motion.button>
+            )}
+          </AnimatePresence>
 
-              <input
-                type="number"
-                placeholder="Cantidad"
-                min="1"
-                value={cantidad}
-                onChange={(e) => setCantidad(parseInt(e.target.value))}
-              />
-
-              <button className="btn-egipcio" onClick={agregarProducto}>
-                + Agregar
-              </button>
-            </div>
+          <div style={{ marginTop: "1rem" }}>
+            <BotonVolver ruta="/" />
           </div>
-          {productosVenta.length > 0 && (
-            <table className="tabla-egipcia">
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
-                  <th>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productosVenta.map((p, i) => (
-                  <tr key={i}>
-                    <td>{p.nombre}</td>
-                    <td>{p.cantidad}</td>
-                    <td>${p.precio.toFixed(2)}</td>
-                    <td>${(p.cantidad * p.precio).toFixed(2)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <div className="total-section">
-            <h3>Total: ${total.toFixed(2)}</h3>
-            <button className="btn-egipcio confirmar" onClick={confirmarVenta}>
-              💰 Confirmar Venta
-            </button>
-          </div>
-        </>
-      )}
-
-      <div>
-        <BotonVolver ruta="/" />
+        </div>
       </div>
     </div>
   );
